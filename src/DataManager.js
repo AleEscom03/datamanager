@@ -1,4 +1,4 @@
-import { html, css, LitElement } from 'lit-element';
+import { html, LitElement } from 'lit-element';
 
 export class DataManager extends LitElement {
 
@@ -16,13 +16,13 @@ export class DataManager extends LitElement {
     this.data = [];
   }
 
-  firstUpdated() {
-    fetch(`${this.url}`)
+  async firstUpdated() {
+    await fetch(`${this.url}`)
       .then(r => r.json())
       .then(data => {
         this.mapInfo(data.results);
       });
-    this.dispatchEvent(new CustomEvent('info-loaded', {detail: this.data}));  
+    this.dispatchEvent(new CustomEvent('info-loaded', { detail: this.data }));
   }
 
   mapInfo(data) {
@@ -32,7 +32,7 @@ export class DataManager extends LitElement {
         id: item.id,
         image: item.image
       }
-      this.data = [...this.data,itm]
+      this.data = [...this.data, itm]
     });
   }
 
